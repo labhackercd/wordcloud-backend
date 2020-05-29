@@ -9,7 +9,7 @@ services:
       - POSTGRES_PASSWORD=postgres
   web:
     build: .
-    command: bash -c "python src/manage.py migrate --noinput && python src/manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python nltk_data.py && python src/manage.py migrate --noinput && python src/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/var/labhacker/wordcloud_backend
     ports:

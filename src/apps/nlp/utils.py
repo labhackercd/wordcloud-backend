@@ -4,8 +4,6 @@ from nltk.util import ngrams
 from nltk.corpus import stopwords as nltk_stopwords
 from collections import Counter
 from string import punctuation
-import requests
-import re
 
 
 def get_tokens(questions, extra_stopwords=None):
