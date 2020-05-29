@@ -1,0 +1,5 @@
+Django
+psycopg2-binary
+celery
+redis
+django_celery_beat
