@@ -22,7 +22,7 @@ class Analysis(models.Model):
 
 
 class Word(models.Model):
-    word = models.CharField(_('word'), max_length=250)
+    word = models.TextField(_('word'))
     frequency = models.PositiveIntegerField(_('frequency'), default=0)
     analisis = models.ForeignKey('data.Analysis', on_delete=models.CASCADE,
                                  related_name='words')
