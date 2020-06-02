@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'wordcloud_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.' + config('DATABASE_ENGINE' ,default='sqlite3'),
+        'ENGINE': 'django.db.backends.' + config('DATABASE_ENGINE', default='sqlite3'),
         'NAME': config('NAME', default=os.path.join(BASE_DIR, 'db.sqlite3')),
         'USER': config('USER', default=''),
         'PASSWORD': config('PASSWORD', default=''),
@@ -136,4 +136,4 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
-AUDIENCIAS_API_URL = 'https://edemocracia.camara.leg.br/audiencias/api/'
+AUDIENCIAS_API_URL = config('AUDIENCIAS_API_URL', default='')

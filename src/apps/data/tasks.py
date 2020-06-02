@@ -24,19 +24,13 @@ def create_questions(data):
 @celery_app.task
 def get_questions():
     data = []
-    rooms_id = [
-        '1538', '1537', '1533', '1531', '1530', '1529', '1528', '1527', '1526', '1525',
-        '1523', '1520', '1519', '1518', '1517', '1516', '1515', '1514', '1513', '1512'
-    ]
 
-    for id in rooms_id:
-        url = settings.AUDIENCIAS_API_URL + 'question/?room__id=%s' % str(id)
-        request = get_json_request(url)
-        data += request['results']
+    response = requests.get(settings.AUDIENCIAS_API_URL).json()
+    data = response['results']
 
-        while request['next']:
-            page += 1
-            data += get_json_request(url, page)
+    while response['next']:
+        response = requests.get(response['next']).json()
+        data += response['results']
 
     create_questions(data)
 
