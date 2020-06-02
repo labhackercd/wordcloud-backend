@@ -5,7 +5,7 @@ from collections import Counter
 from django.http import JsonResponse
 
 
-def multigrams_analysis():
+def multigrams_analysis(request):
     questions = AudienciasQuestion.objects.values_list('question', flat=True)
     tokens = get_tokens(questions)
 

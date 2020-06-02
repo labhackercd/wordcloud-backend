@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from decouple import config, Csv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,13 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'pt94li5vpv!+oj=6s_j8e-r%w-wo8f_m(1d*b26l*n+x_)1(@2'
+SECRET_KEY = config('SECRETE_KEY', default="key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0"]
-
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default="localhost", cast=Csv())
 
 # Application definition
 
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_beat',
-
+    'django_celery_results',
     'django_extensions',
 
     'apps.data',
@@ -81,12 +81,12 @@ WSGI_APPLICATION = 'wordcloud_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.' + config('DATABASE_ENGINE' ,default='sqlite3'),
+        'NAME': config('NAME', default=os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': config('USER', default=''),
+        'PASSWORD': config('PASSWORD', default=''),
+        'HOST': config('HOST', default=''),
+        'PORT': config('PORT', default=''),
     }
 }
 

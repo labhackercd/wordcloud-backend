@@ -3,35 +3,80 @@ version: "3"
 services:
   db:
     image: postgres
+    restart: on-failure
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=wordcloud
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=wordcloud
+
   web:
     build: .
-    command: bash -c "python nltk_data.py && python src/manage.py migrate --noinput && python src/manage.py runserver 0.0.0.0:8000"
+    command: ./start_web.sh
+    restart: on-failure
     volumes:
       - .:/var/labhacker/wordcloud_backend
+    environment:
+      - SECRET_KEY=key
+      - DEBUG=True
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+      - DATABASE_ENGINE=postgresql
+      - NAME=wordcloud
+      - USER=root
+      - PASSWORD=wordcloud
+      - HOST=db
+      - PORT=5432
+      - REDIS_SERVER=redis://redis:6379
     ports:
       - "8000:8000"
     depends_on:
       - db
       - redis
+
   redis:
     image: "redis:alpine"
+    command: redis-server
+
   celery:
     build: .
     command: bash -c "cd src && celery -A wordcloud_backend worker -l info"
     volumes:
-      - .:/code
+      - .:/var/labhacker/wordcloud_backend
+    environment:
+      - SECRET_KEY=key
+      - DEBUG=True
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+      - DATABASE_ENGINE=postgresql
+      - NAME=wordcloud
+      - USER=root
+      - PASSWORD=wordcloud
+      - HOST=db
+      - PORT=5432
+      - REDIS_SERVER=redis://redis:6379
     depends_on:
       - db
       - redis
+      - web
+
   celery-beat:
     build: .
-    command: bash -c "cd src && celery -A wordcloud_backend beat -l info"
+    command: ./start_celery_beat.sh
     volumes:
-      - .:/code
+      - .:/var/labhacker/wordcloud_backend
+    environment:
+      - SECRET_KEY=key
+      - DEBUG=True
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+      - DATABASE_ENGINE=postgresql
+      - NAME=wordcloud
+      - USER=root
+      - PASSWORD=wordcloud
+      - HOST=db
+      - PORT=5432
+      - REDIS_SERVER=redis://redis:6379
     depends_on:
       - db
       - redis
+      - web
+
+volumes:
+  postgres_data:
