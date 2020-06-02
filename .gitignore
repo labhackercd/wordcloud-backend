@@ -100,3 +100,4 @@ venv.bak/
 
 # Settings inital from project
 *.ini
+celerybeat.pid
