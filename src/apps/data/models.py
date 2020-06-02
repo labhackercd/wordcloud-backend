@@ -38,7 +38,7 @@ class Word(models.Model):
 class AudienciasQuestion(models.Model):
     room_id = models.PositiveIntegerField(_('room id'), default=0)
     question_id = models.PositiveIntegerField(_('question id'), default=0)
-    question = models.CharField(_('question'), max_length=250)
+    question = models.TextField(_('question'))
 
     class Meta:
         verbose_name = _("Question")
