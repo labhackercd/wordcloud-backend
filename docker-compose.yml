@@ -1,13 +1,6 @@
 version: "3"
 
 services:
-  frontend:
-    container_name: wordcloud-front
-    image: labhackercd/wordcloud_frontend:latest
-    stdin_open: true
-    ports:
-      - 3001:3000
-
   db:
     container_name: wordcloud-db
     image: postgres
@@ -19,7 +12,7 @@ services:
 
   backend:
     container_name: wordcloud-backend
-    image: labhackercd/wordcloud_backend:latest
+    build: .
     command: ./start_web.sh
     restart: on-failure
     volumes:
