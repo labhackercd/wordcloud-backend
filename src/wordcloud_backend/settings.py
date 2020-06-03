@@ -123,17 +123,24 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = config('STATIC_URL', default='/static/')
+
+STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'public'))
 
 
+# Celery
 CELERY_BROKER_URL = 'redis://redis:6379'
-CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
+# Url to request data
 AUDIENCIAS_API_URL = config('AUDIENCIAS_API_URL', default='')
+
+# Url prefix
+URL_PREFIX = config('URL_PREFIX', default='')
