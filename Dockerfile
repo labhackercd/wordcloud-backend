@@ -13,3 +13,5 @@ COPY . /var/labhacker/wordcloud_backend/
 
 RUN chmod 755 start_web.sh
 RUN chmod 755 start_celery_beat.sh
+
+CMD ["python3", "src/manage.py", "runserver", "0.0.0.0:8000"]
