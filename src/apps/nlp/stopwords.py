@@ -36,10 +36,13 @@ EXTRA_STOPWORDS = [
     'saber', 'favor', 'nada', 'senhor', 'senhora', 'novo', 'podem', 'vai',
     'medidas', 'anunciados', 'anunciadas', 'forma', 'medida', 'anúncio',
     'primeiras', 'precisamos', 'uso', 'precisar', 'senhores', 'senhoras',
-    'pré-oficial', 'aumento', 'ampliação'
+    'pré-oficial', 'aumento', 'ampliação', 'q', '"', "'", '’', 'causa', 'parte',
+    'pra', 'nesse', 'nessa', "''", 'aqui', 'assim', 'necessidade', 'queria',
+    'vamos', 'onde', 'dar', 'pq', 'vc', 'vcs', "'s", 'ace', 'acs', 'r', 'visto'
 ]
 
 ONEGRAM_STOPWORDS = [
     'margem', 'nao', 'sim', 'projetos', 'estudos', 'pacote', 'pessoas',
-    'população', 'país', 'anos', 'ano', 'nº', 'projeto', 'demora',
+    'população', 'país', 'anos', 'ano', 'nº', 'projeto', 'demora', 'ajudar',
+    'maior', 'menor', 'hora'
 ]

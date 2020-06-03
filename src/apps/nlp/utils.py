@@ -22,8 +22,10 @@ def get_tokens(questions, extra_stopwords=None):
         stopwords += extra_stopwords
     tokens = []
     for text in questions:
-        tokens += [i for i in word_tokenize(text.lower(),
-                                            language='portuguese') if i not in stopwords]
+        tokens += [i for i in word_tokenize(
+            text.lower(),
+            language='portuguese'
+        ) if i not in stopwords and not i.isnumeric()]
 
     return tokens
 
