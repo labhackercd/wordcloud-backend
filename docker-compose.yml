@@ -18,7 +18,7 @@ services:
     environment:
       - SECRET_KEY=key
       - DEBUG=True
-      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+      - ALLOWED_HOSTS=*
       - DATABASE_ENGINE=postgresql
       - NAME=wordcloud
       - USER=root
@@ -45,7 +45,6 @@ services:
     environment:
       - SECRET_KEY=key
       - DEBUG=True
-      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
       - DATABASE_ENGINE=postgresql
       - NAME=wordcloud
       - USER=root
@@ -66,7 +65,6 @@ services:
     environment:
       - SECRET_KEY=key
       - DEBUG=True
-      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
       - DATABASE_ENGINE=postgresql
       - NAME=wordcloud
       - USER=root

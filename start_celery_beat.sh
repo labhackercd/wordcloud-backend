@@ -22,4 +22,4 @@ done
 
 python3 src/manage.py makemigrations
 python3 src/manage.py migrate
-cd src && celery -A wordcloud_backend beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+cd src && celery -A wordcloud_backend beat -l info --pidfile="" --scheduler django_celery_beat.schedulers:DatabaseScheduler
