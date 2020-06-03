@@ -13,12 +13,19 @@ def get_json_request(url, page=1):
 
 
 def create_questions(data):
+    created_questions = 0
+    questions_exists = AudienciasQuestion.objects.all().values_list(
+        'question_id', flat=True)
     for question in data:
-        AudienciasQuestion.objects.create(
-            room_id=question['room'],
-            question_id=question['id'],
-            question=question['question']
-        )
+        if question['id'] not in questions_exists:
+            AudienciasQuestion.objects.create(
+                room_id=question['room'],
+                question_id=question['id'],
+                question=question['question']
+            )
+            created_questions += 1
+
+    return created_questions
 
 
 @celery_app.task
@@ -32,6 +39,6 @@ def get_questions():
         response = requests.get(response['next']).json()
         data += response['results']
 
-    create_questions(data)
+    created_questions = create_questions(data)
 
-    return _('Questions was fetched successfully.')
+    return _('%s questions was fetched successfully.' % str(created_questions))
