@@ -142,6 +142,5 @@ CELERY_RESULT_SERIALIZER = 'json'
 # Url to request data
 AUDIENCIAS_API_URL = config('AUDIENCIAS_API_URL', default='')
 
-# Force script name
-FORCE_SCRIPT_NAME = config('FORCE_SCRIPT_NAME', default='')
+# Url prefix
 URL_PREFIX = config('URL_PREFIX', default='')
