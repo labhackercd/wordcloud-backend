@@ -27,6 +27,9 @@ services:
       - PORT=5432
       - REDIS_SERVER=redis://redis:6379
       - AUDIENCIAS_API_URL=https://edemocracia.camara.leg.br/audiencias/api/question/?room__legislative_body_initials=CEXCORVI
+      - FORCE_SCRIPT_NAME=/api
+      - STATIC_URL=/api/static/
+      - URL_PREFIX=api
     ports:
       - "8000:8000"
     depends_on:
