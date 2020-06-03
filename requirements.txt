@@ -1,6 +1,6 @@
 Django
 psycopg2-binary
-celery
+celery==4.4.3
 redis
 django-celery-results
 django-celery-beat
