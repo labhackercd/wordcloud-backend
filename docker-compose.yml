@@ -1,6 +1,5 @@
 version: "3"
 
-services:
   db:
     container_name: wordcloud-db
     image: postgres
@@ -9,6 +8,9 @@ services:
       - POSTGRES_DB=wordcloud
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=wordcloud
+      - PGDATA=/var/lib/postgresql/data/
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
 
   backend:
     container_name: wordcloud-backend
@@ -16,7 +18,7 @@ services:
     command: ./start_web.sh
     restart: on-failure
     volumes:
-      - .:/var/labhacker/wordcloud_backend
+      - .:/var/labhacker/wordcloud_backend:z
     environment:
       - SECRET_KEY=key
       - DEBUG=True
@@ -57,6 +59,7 @@ services:
       - PASSWORD=wordcloud
       - HOST=db
       - PORT=5432
+      - AUDIENCIAS_API_URL=https://edemocracia.camara.leg.br/audiencias/api/question/?room__legislative_body_initials=CEXCORVI
       - REDIS_SERVER=redis://redis:6379
     depends_on:
       - db
@@ -68,7 +71,7 @@ services:
     image: labhackercd/wordcloud_backend:latest
     command: ./start_celery_beat.sh
     volumes:
-      - .:/var/labhacker/wordcloud_backend
+      - .:/var/labhacker/wordcloud_backend:z
     environment:
       - SECRET_KEY=key
       - DEBUG=True
@@ -78,11 +81,20 @@ services:
       - PASSWORD=wordcloud
       - HOST=db
       - PORT=5432
+      - AUDIENCIAS_API_URL=https://edemocracia.camara.leg.br/audiencias/api/question/?room__legislative_body_initials=CEXCORVI
       - REDIS_SERVER=redis://redis:6379
     depends_on:
       - db
       - redis
       - backend
 
+
 volumes:
-  postgres_data:
+  pg_data:
+    driver: local
+  backend:
+    driver: local
+  worker:
+    driver: local
+  beat:
+    driver: local
