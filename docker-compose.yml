@@ -1,5 +1,5 @@
 version: "3"
-
+services:
   db:
     container_name: wordcloud-db
     image: postgres
@@ -11,7 +11,6 @@ version: "3"
       - PGDATA=/var/lib/postgresql/data/
     volumes:
       - pg_data:/var/lib/postgresql/data/
-
   backend:
     container_name: wordcloud-backend
     build: .
@@ -38,12 +37,10 @@ version: "3"
     depends_on:
       - db
       - redis
-
   redis:
     container_name: wordcloud-redis
     image: "redis:alpine"
     command: redis-server
-
   worker:
     container_name: wordcloud-worker
     image: labhackercd/wordcloud_backend:latest
@@ -65,7 +62,6 @@ version: "3"
       - db
       - redis
       - backend
-
   beat:
     container_name: wordcloud-beat
     image: labhackercd/wordcloud_backend:latest
@@ -87,7 +83,6 @@ version: "3"
       - db
       - redis
       - backend
-
 
 volumes:
   pg_data:
