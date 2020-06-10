@@ -13,11 +13,11 @@ services:
       - pg_data:/var/lib/postgresql/data/
   backend:
     container_name: wordcloud-backend
-    build: .
+    image: labhackercd/wordcloud_backend:latest
     command: ./start_web.sh
     restart: on-failure
     volumes:
-      - .:/var/labhacker/wordcloud_backend:z
+      - backend:/var/labhacker/wordcloud_backend:z
     environment:
       - SECRET_KEY=key
       - DEBUG=True
@@ -46,7 +46,7 @@ services:
     image: labhackercd/wordcloud_backend:latest
     command: bash -c "cd src && celery -A wordcloud_backend worker -l info"
     volumes:
-      - .:/var/labhacker/wordcloud_backend
+      - worker:/var/labhacker/wordcloud_backend:z
     environment:
       - SECRET_KEY=key
       - DEBUG=True
@@ -67,7 +67,7 @@ services:
     image: labhackercd/wordcloud_backend:latest
     command: ./start_celery_beat.sh
     volumes:
-      - .:/var/labhacker/wordcloud_backend:z
+      - beat:/var/labhacker/wordcloud_backend:z
     environment:
       - SECRET_KEY=key
       - DEBUG=True
